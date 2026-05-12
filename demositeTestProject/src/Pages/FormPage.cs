@@ -29,6 +29,7 @@ public class FormPage : BasePage
         EnterText(MobileField, mobile);
         EnterText(SubjectsField, subjects);
         Click(SubjectMaths);
+        // ScrollToElement(HobbiesReading);
         Click(HobbiesReading);
     }
 }

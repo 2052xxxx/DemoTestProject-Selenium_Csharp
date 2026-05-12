@@ -54,46 +54,32 @@ public class BasePage
         wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
     }
 
-
-    protected bool IsElementInViewport(IWebElement element)
+    protected void ScrollToElement(By locator)
     {
+        WaitForElement(locator);
+        WaitForClickable(locator);
+
+        // IWebElement element = driver.FindElement(locator);
+        // Actions actions = new Actions(driver);
+        // actions.ScrollToElement(element).Perform();
+
+        IWebElement element = driver.FindElement(locator);
+        // Cast the driver to IJavaScriptExecutor
         IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-        return (bool)js.ExecuteScript(
-            "return (function() {" +
-            "  var rect = arguments[0].getBoundingClientRect();" +
-            "  return (" +
-            "    rect.top >= 0 && " +
-            "    rect.left >= 0 && " +
-            "    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && " +
-            "    rect.right <= (window.innerWidth || document.documentElement.clientWidth)" +
-            "  );" +
-            "})(arguments[0]);",
-            element
-        );
+
+        // Execute the scrollIntoView script
+        js.ExecuteScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    protected void ScrollToElement(IWebElement element)
-    {
-        new Actions(driver)
-            .ScrollToElement(element)
-            .Perform();
-    }
     protected void Click(By locator)
     {
         WaitForElement(locator);
         WaitForClickable(locator);
+        ScrollToElement(locator);
+
         IWebElement element = driver.FindElement(locator);
-
-        // Check if element is in viewport
-        while (!IsElementInViewport(element))
-        {
-            // Scroll to element if not visible
-            ScrollToElement(element);
-        }
-
         element.Click();
     }
-
 
     protected void DoubleClick(By locator)
     {
@@ -113,7 +99,6 @@ public class BasePage
         WaitForClickable(locator);
 
         IWebElement element = driver.FindElement(locator);
-        // ScrollToElement(element);
         Actions actions = new Actions(driver);
 
         actions.ContextClick(element).Perform();
