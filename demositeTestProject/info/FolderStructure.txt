@@ -1,0 +1,68 @@
+NUnitSeleniumTests/
+│
+├── src/
+│   ├── Tests/
+│   │   ├── UITests/
+│   │   │   ├── LoginTests.cs
+│   │   │   ├── DashboardTests.cs
+│   │   │   ├── ProductSearchTests.cs
+│   │   │   └── CheckoutTests.cs
+│   │   ├── APITests/
+│   │   │   ├── UserAPITests.cs
+│   │   │   └── ProductAPITests.cs
+│   │   └── IntegrationTests/
+│   │       └── EndToEndTests.cs
+│   │
+│   ├── Pages/
+│   │   ├── BasePage.cs
+│   │   ├── LoginPage.cs
+│   │   ├── DashboardPage.cs
+│   │   ├── ProductPage.cs
+│   │   └── CheckoutPage.cs
+│   │
+│   ├── Utilities/
+│   │   ├── WebDriver/
+│   │   │   ├── DriverFactory.cs
+│   │   │   ├── BrowserType.cs
+│   │   │   └── DriverOptions.cs
+│   │   ├── Helpers/
+│   │   │   ├── WaitHelper.cs
+│   │   │   ├── ScreenshotHelper.cs
+│   │   │   ├── LogHelper.cs
+│   │   │   └── TestDataHelper.cs
+│   │   └── Constants/
+│   │       ├── AppConfig.cs
+│   │       ├── Urls.cs
+│   │       └── Timeouts.cs
+│   │
+│   ├── TestData/
+│   │   ├── TestUsers.cs
+│   │   ├── TestProducts.cs
+│   │   └── TestScenarios.cs
+│   │
+│   └── Extensions/
+│       ├── WebElementExtensions.cs
+│       ├── WebDriverExtensions.cs
+│       └── StringExtensions.cs
+│
+├── Tests/
+│   ├── Screenshots/
+│   │   └── [Screenshots generated during test failures]
+│   ├── Reports/
+│   │   └── [HTML test reports]
+│   └── Logs/
+│       └── [Test execution logs]
+│
+├── Configuration/
+│   ├── app.config
+│   ├── appsettings.json
+│   ├── appsettings.Development.json
+│   ├── appsettings.Staging.json
+│   └── appsettings.Production.json
+│
+├── NUnitSeleniumTests.csproj
+├── app.config
+├── packages.config (or .csproj package references)
+├── README.md
+├── .gitignore
+└── runsettings.xml (Visual Studio test settings)
