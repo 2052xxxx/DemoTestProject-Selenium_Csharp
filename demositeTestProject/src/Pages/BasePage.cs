@@ -16,10 +16,6 @@ public class BasePage
         this.driver = driver;
         this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSeconds));
     }
-    // public void WaitForPageLoad()
-    // {
-    //     wait.Until(d => ((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").Equals("complete"));
-    // }
 
     public void NavigateTo(string url)
     {
@@ -59,23 +55,48 @@ public class BasePage
         WaitForElement(locator);
         WaitForClickable(locator);
 
-        // IWebElement element = driver.FindElement(locator);
-        // Actions actions = new Actions(driver);
-        // actions.ScrollToElement(element).Perform();
-
         IWebElement element = driver.FindElement(locator);
-        // Cast the driver to IJavaScriptExecutor
-        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+        ScrollElementIntoView(element);
+        WaitForElementInViewport(locator);
+    }
 
-        // Execute the scrollIntoView script
+    private void ScrollElementIntoView(IWebElement element)
+    {
+        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
         js.ExecuteScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    private void WaitForElementInViewport(By locator)
+    {
+        wait.Until(d =>
+        {
+            try
+            {
+                var element = d.FindElement(locator);
+                return IsInViewport(element);
+            }
+            catch
+            {
+                return false;
+            }
+        });
+    }
+
+    private bool IsInViewport(IWebElement element)
+    {
+        IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+        return (bool)js.ExecuteScript(
+            "var rect = arguments[0].getBoundingClientRect();" +
+            "return rect.top >= 0 && rect.left >= 0 && " +
+            "rect.bottom <= window.innerHeight && rect.right <= window.innerWidth;",
+            element
+        );
     }
 
     protected void Click(By locator)
     {
         WaitForElement(locator);
         WaitForClickable(locator);
-        ScrollToElement(locator);
 
         IWebElement element = driver.FindElement(locator);
         element.Click();

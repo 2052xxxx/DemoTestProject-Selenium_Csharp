@@ -14,8 +14,11 @@ public class FormPage : BasePage
     private By SubjectsField = By.XPath("//input[@class='subjects-auto-complete__input']");
     private By SubjectMaths = By.XPath("//div[@id='subjectsContainer'] //div[text()='Maths']");
     private By HobbiesReading = By.XPath("//div[@id = 'hobbiesWrapper'] // label[text() = 'Reading'] / preceding-sibling::input[@type = 'checkbox']");
-
-
+    private By StateField = By.CssSelector("div[class^='css'][class$='container']#state");
+    private By CityField = By.CssSelector("div[class^='css'][class$='container']#city");
+    private By StateOptionField = By.XPath("//div[contains(@class, 'menu')] //div[text() = 'NCR']");
+    private By CityOptionField = By.XPath("//div[contains(@class, 'menu')] //div[text() = 'Delhi']");
+    private By SubmitButton = By.CssSelector("button#submit");
     public FormPage(IWebDriver driver) : base(driver)
     {
     }
@@ -29,7 +32,13 @@ public class FormPage : BasePage
         EnterText(MobileField, mobile);
         EnterText(SubjectsField, subjects);
         Click(SubjectMaths);
-        // ScrollToElement(HobbiesReading);
+        ScrollToElement(HobbiesReading);
         Click(HobbiesReading);
+        ScrollToElement(StateField);
+        Click(StateField);
+        Click(StateOptionField);
+        Click(CityField);
+        Click(CityOptionField);
+        Click(SubmitButton);
     }
 }
